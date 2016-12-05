@@ -24,9 +24,18 @@ var onPosition = function (newLocation) {
 };
 
 var startWatchingPosition = function () {
+  var watchId = -1;
   if (! watchingPosition && navigator.geolocation) {
-    navigator.geolocation.watchPosition(onPosition, onError, options);
+    watchId = navigator.geolocation.watchPosition(onPosition, onError, options);
     watchingPosition = true;
+  }
+  return watchId;
+};
+
+var stopWatchingPosition = function (watchId) {
+  if (watchingPosition && navigator.geolocation) {
+    watchId = navigator.geolocation.clearWatch(watchId);
+    watchingPosition = false;
   }
 };
 
